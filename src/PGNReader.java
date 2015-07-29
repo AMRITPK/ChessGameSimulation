@@ -1,15 +1,20 @@
+
 public class PGNReader {
 	String[][] board;
 
 	final static char BLACK = 'b';
 	final static char WHITE = 'w';
 
-	final static char PAWN = 'P';
+	private static final char CAPTURE = 'x';
+
+
+	final static char PAWN = 'P';	
 	final static char KING = 'K';
 	final static char QUEEN = 'Q';
 	final static char ROOK = 'R';
 	final static char BISHOP = 'B';
 	final static char KNIGHT = 'K';
+
 
 	public PGNReader() {
 		board = new String[8][8];
@@ -82,4 +87,9 @@ public class PGNReader {
 
 	}
 
+	
+	private void movePawn(String notation, char color) {
+		boolean  capture = notation.indexOf(CAPTURE) != -1;
+	}
+	
 }
