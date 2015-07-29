@@ -92,7 +92,7 @@ public class PGNReader {
 			return;
 		}
 		if (check) {
-			pos = pos.replace("\\+", "");
+			pos = pos.replace("+", "");
 		}
 
 		String finalPos = pos.substring(1, pos.length());
