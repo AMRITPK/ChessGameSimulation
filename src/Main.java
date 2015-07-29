@@ -36,14 +36,14 @@ public class Main {
 		
 		for (String string : input.split("(\\d)+\\.")) {
 			
-			/*if ((string.trim()).length() != 0) {
+			if ((string.trim()).length() != 0) {
 				pgnReader.move(string.trim());
 				
 				//System.err.println(string);
 				pgnReader.printBoard();
-			}*/
+			}
 		}
-		pgnReader.move("Bb5 a6");
+		//pgnReader.move("Bb5 a6");
 		pgnReader.printBoard();
 		
 	}
