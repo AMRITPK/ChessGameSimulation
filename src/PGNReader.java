@@ -57,10 +57,10 @@ public class PGNReader {
 		
 		
 		board[0][4] = WHITE+""+KING;
-		board[7][3] = BLACK+""+KING;
+		board[7][4] = BLACK+""+KING;
 		
 		board[0][3] = WHITE+""+QUEEN;
-		board[7][4] = BLACK+""+QUEEN;
+		board[7][3] = BLACK+""+QUEEN;
 	}
 
 	public void move(String moveNotation) {
@@ -94,14 +94,43 @@ public class PGNReader {
 		case 'R':
 			moveRook(finalPos, color);
 			break;
-		case 'O':
-			//TODO handle 
+		case '0':
+			if(pos.equals("0-0-0")) queenSideCastling(color);
+			else if(pos.equals("0-0")) kingSideCastling(color);
 			break;
 		default:
 			movePawn(pos, color);
 		}
 	}
 
+	private void queenSideCastling(char color) {
+		if (color == WHITE) {
+			board[0][4] = BLANK;
+			board[0][2] = WHITE+""+KING;
+			board[0][0] = BLANK;
+			board[0][3] = WHITE+""+ROOK;
+		} else {
+			board[7][4] = BLANK;
+			board[7][2] = WHITE+""+KING;
+			board[7][0] = BLANK;
+			board[7][3] = WHITE+""+ROOK;
+		}
+	}
+	
+	private void kingSideCastling(char color) {
+		if (color == WHITE) {
+			board[0][4] = BLANK;
+			board[0][2] = WHITE+""+KING;
+			board[0][6] = BLANK;
+			board[0][5] = WHITE+""+ROOK;
+		} else {
+			board[7][4] = BLANK;
+			board[7][6] = WHITE+""+KING;
+			board[7][7] = BLANK;
+			board[7][5] = WHITE+""+ROOK;
+		}
+	}
+	
 	private void moveKing(String finalPos, char color) {
 		int kingXPositions[] = { 1, -1, 0, 0, 1, -1, -1, 1 };
 		int kingYPositions[] = { 0, 0, 1, -1, 1, 1, -1, -1 };
