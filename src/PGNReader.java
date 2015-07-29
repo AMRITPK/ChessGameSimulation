@@ -71,7 +71,15 @@ public class PGNReader {
 
 	 void executeMove(String pos, char color) {
 
-		pos = pos.replaceAll("\\+", "");
+		boolean checkMate = pos.contains("++");
+		boolean check = pos.contains("+");
+		if (checkMate) {
+			return;
+		} 
+		if (check) {
+			pos = pos.replace("\\+", "");
+		}
+		
 		String finalPos = pos.substring(1, pos.length());
 
 		switch (pos.charAt(0)) {
@@ -111,9 +119,9 @@ public class PGNReader {
 			board[0][3] = WHITE + "" + ROOK;
 		} else {
 			board[7][4] = BLANK;
-			board[7][2] = WHITE + "" + KING;
+			board[7][2] = BLACK + "" + KING;
 			board[7][0] = BLANK;
-			board[7][3] = WHITE + "" + ROOK;
+			board[7][3] = BLACK + "" + ROOK;
 		}
 	}
 
@@ -125,9 +133,9 @@ public class PGNReader {
 			board[0][5] = WHITE + "" + ROOK;
 		} else {
 			board[7][4] = BLANK;
-			board[7][6] = WHITE + "" + KING;
+			board[7][6] = BLACK + "" + KING;
 			board[7][7] = BLANK;
-			board[7][5] = WHITE + "" + ROOK;
+			board[7][5] = BLACK + "" + ROOK;
 		}
 	}
 
