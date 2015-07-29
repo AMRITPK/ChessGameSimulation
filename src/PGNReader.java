@@ -21,7 +21,10 @@ public class PGNReader {
 	}
 
 	public void move(String moveNotation) {
-		String[] s = moveNotation.split(" ");
+		System.out.println(moveNotation);
+		
+		String[] s = moveNotation.trim().split(" ");
+		System.out.println(s[0]+"   "+s[1]);
 		executeMove(s[0], WHITE);
 		executeMove(s[1], BLACK);
 	}
