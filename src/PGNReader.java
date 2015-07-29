@@ -103,12 +103,12 @@ public class PGNReader {
 	}
 
 	private void moveKing(String finalPos, char color) {
-		int kingXPositions[] = { 1, -1, 0, 0, 1, -1, -1, 1 };
-		int kingYPositions[] = { 0, 0, 1, -1, 1, 1, -1, -1 };
+		int kingYPositions[] = { 1, -1, 0, 0, 1, -1, -1, 1 };
+		int kingXPositions[] = { 0, 0, 1, -1, 1, 1, -1, -1 };
 
 		int strlen = finalPos.length();
-		int xCoord = finalPos.charAt(strlen - 1) - 'a';
-		int yCoord = finalPos.charAt(strlen - 1) - '1';
+		int yCoord = finalPos.charAt(strlen - 1) - 'a';
+		int xCoord = finalPos.charAt(strlen - 1) - '1';
 
 		int i, j;
 		int finalX = 0;
@@ -140,32 +140,37 @@ public class PGNReader {
 
 
 	public void moveKnight(String finalPos, char color) {
-		int knightXPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
-		int knightYPositions[] = { 2, -2, 1, 1, 2, -2, -1, -1 };
-
+		int knightYPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
+		int knightXPositions[] = { 2, -2, 1, 1, 2, -2, -1, -1 };
 		int strlen = finalPos.length();
-		int xCoord = finalPos.charAt(strlen - 1) - 'a';
-		int yCoord = finalPos.charAt(strlen - 1) - '1';
-
-		int i, j;
+		int yCoord = finalPos.charAt(strlen-2) - 'a';
+		int xCoord = finalPos.charAt(strlen - 1) - '1';
+	  
+		//System.out.println(finalPos + " " +xCoord + " " + yCoord);
+ 		
+		int i, j,possibleX,possibleY;
 		int finalX = 0;
 		int finalY = 0;
-
 		for (i = 0, j = 0; i < 8; i++) {
-			int possibleX = xCoord + knightXPositions[i];
-			int possibleY = yCoord + knightYPositions[i];
+			
+			 possibleX = xCoord + knightXPositions[i];
+			 possibleY = yCoord + knightYPositions[i];
+			
+			//System.out.println(possibleX + " " + possibleY);
 			if (withinBoard(possibleX) && withinBoard(possibleY) && board[possibleX][possibleY].contains(color + "N")) {
 				char position = finalPos.charAt(0);
 				finalX = possibleX;
 				finalY = possibleY;
-				if (position != 'x' && finalPos.charAt(position + 1) == 'x' && possibleX == position - 'a') {
+		//		System.out.println(possibleX + " " + possibleY +  " " + x);
+				if (position != 'x' && finalPos.charAt(1) == 'x' && possibleY == position - 'a' ) {
 					break;
-				}
+				}		
 			}
 		}
+		
 		board[xCoord][yCoord] = color + "N";
 		board[finalX][finalY] = BLANK;
-
+		
 	}
 	
 	private boolean withinBoard(int x) {
@@ -177,7 +182,7 @@ public class PGNReader {
 	private void movePawn(String finalPos, char color) {
 		boolean  capture = finalPos.indexOf(CAPTURE) != -1;
 		System.err.println(finalPos);
-		
+
 		if(capture) {
 			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
 		}
