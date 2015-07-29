@@ -203,7 +203,7 @@ public class PGNReader {
 	
 	private void movePawn(String finalPos, char color) {
 		boolean  capture = finalPos.indexOf(CAPTURE) != -1;
-		System.err.println(finalPos);
+
 		
 		if(capture) {
 			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
@@ -226,7 +226,6 @@ public class PGNReader {
 		
 		
 		if(capture) {
-			System.out.println(x+"-"+y+"---"+(x-1)+""+(y-1)+"-"+(x-1)+""+(y+1));
 			if(color == WHITE && board[x-1][y-1].equals(color+""+PAWN) ) {
 				board[x-1][y-1] = BLANK;
 			
@@ -252,7 +251,7 @@ public class PGNReader {
 				}
 			}
 		} else {
-			for (int i = y+1; i < Math.min(y+3,BOARDSIZE) ; i++) {
+			for (int i = x+1; i < Math.min(x+3,BOARDSIZE) ; i++) {
 				if (board[i][y].equals(color+""+PAWN)) {
 					board[i][y] = BLANK;
 					break;
