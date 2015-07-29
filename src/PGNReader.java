@@ -103,8 +103,32 @@ public class PGNReader {
 	}
 
 	private void moveKing(String finalPos, char color) {
-		// TODO Auto-generated method stub
-		
+		int kingXPositions[] = { 1, -1, 0, 0, 1, -1, -1, 1 };
+		int kingYPositions[] = { 0, 0, 1, -1, 1, 1, -1, -1 };
+
+		int strlen = finalPos.length();
+		int xCoord = finalPos.charAt(strlen - 1) - 'a';
+		int yCoord = finalPos.charAt(strlen - 1) - '1';
+
+		int i, j;
+		int finalX = 0;
+		int finalY = 0;
+
+		for (i = 0, j = 0; i < 8; i++) {
+			int possibleX = xCoord + kingXPositions[i];
+			int possibleY = yCoord + kingYPositions[i];
+			if (withinBoard(possibleX) && withinBoard(possibleY) && board[possibleX][possibleY].contains(color + "K")) {
+				char position = finalPos.charAt(0);
+				finalX = possibleX;
+				finalY = possibleY;
+				if (position != 'x' && finalPos.charAt(position + 1) == 'x' && possibleX == position - 'a') {
+					break;
+				}
+			}
+		}
+		board[xCoord][yCoord] = color + "K";
+		board[finalX][finalY] = BLANK;
+
 	}
 
 	
@@ -114,20 +138,38 @@ public class PGNReader {
 
 	}
 
-	private void moveKnight(String finalPos, char color) {
-		int knightXPositions[] ={1,1,2,-1,-1,-1,2,-2};
-		int knightYPositions[]={2,-2,1,1,2,-2,-1,-1};
-		
+
+	public void moveKnight(String finalPos, char color) {
+		int knightXPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
+		int knightYPositions[] = { 2, -2, 1, 1, 2, -2, -1, -1 };
+
 		int strlen = finalPos.length();
-		int xCoord = finalPos.charAt(strlen-1) - '1';
-		int yCoord = finalPos.charAt(strlen-1) - 'a';
-		
-		if(finalPos.charAt(0)!='x'){
-			
+		int xCoord = finalPos.charAt(strlen - 1) - 'a';
+		int yCoord = finalPos.charAt(strlen - 1) - '1';
+
+		int i, j;
+		int finalX = 0;
+		int finalY = 0;
+
+		for (i = 0, j = 0; i < 8; i++) {
+			int possibleX = xCoord + knightXPositions[i];
+			int possibleY = yCoord + knightYPositions[i];
+			if (withinBoard(possibleX) && withinBoard(possibleY) && board[possibleX][possibleY].contains(color + "N")) {
+				char position = finalPos.charAt(0);
+				finalX = possibleX;
+				finalY = possibleY;
+				if (position != 'x' && finalPos.charAt(position + 1) == 'x' && possibleX == position - 'a') {
+					break;
+				}
+			}
 		}
-		else {
-			
-		}
+		board[xCoord][yCoord] = color + "N";
+		board[finalX][finalY] = BLANK;
+
+	}
+	
+	private boolean withinBoard(int x) {
+		return (x >= 0 && x < 8);
 	}
 
 	
@@ -200,11 +242,9 @@ public class PGNReader {
 		System.out.println("    a  b  c  d  e  f  g  h  ");
 	}
 	public void moveRook(String Movetext,char color){
-		printBoard();
-    	char colorToSearch=BLACK;
-    	  if(color==BLACK){
-    		  colorToSearch=WHITE;
-    	  }
+		
+    	char colorToSearch=color;
+    	  
     	  final String ASSUMENULL="";
     	  Movetext="Qa3";
     	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
@@ -249,11 +289,9 @@ public class PGNReader {
 	}
 	
 	public void moveBishop(String Movetext,char color){
-		printBoard();
-    	char colorToSearch=BLACK;
-    	  if(color==BLACK){
-    		  colorToSearch=WHITE;
-    	  }
+		
+    	char colorToSearch=color;
+    	 
     	  final String ASSUMENULL="";
     	  Movetext="Qa3";
     	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
