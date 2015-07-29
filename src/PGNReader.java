@@ -64,9 +64,13 @@ public class PGNReader {
 	}
 
 	public void move(String moveNotation) {
-		String[] s = moveNotation.split(BLANK);
-		executeMove(s[0], WHITE);
-		executeMove(s[1], BLACK);
+		
+		String[] s = moveNotation.trim().split(" ");
+		
+		System.out.println(s[0]+"   "+s[1]);
+
+		executeMove(s[0].trim(), WHITE);
+		executeMove(s[1].trim(), BLACK);
 	}
 
 	private void executeMove(String pos, char color) {
@@ -99,10 +103,7 @@ public class PGNReader {
 		
 	}
 
-	private void moveRook(String finalPos, char color) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	private void moveQueen(String finalPos, char color) {
 		// TODO Auto-generated method stub
@@ -172,6 +173,63 @@ public class PGNReader {
 			}
 		}
 		board[x][y] = ""+color+PAWN;
+		
+	}
+	
+	public void printBoard(){
+		for(int i=0;i<8;++i){
+			for(int j=7;j>=0;--j){
+				System.out.print(board[i][j]);
+			}
+			System.out.println();
+		}
+	}
+	public void moveRook(String Movetext,char color){
+		printBoard();
+    	char colorToSearch=BLACK;
+    	  if(color==BLACK){
+    		  colorToSearch=WHITE;
+    	  }
+    	  final String ASSUMENULL="";
+    	  Movetext="Qa3";
+    	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
+    	  int x =position.charAt(0)-'a';
+    	  int y =Integer.parseInt(position.charAt(1)+"")-1; 
+    	  System.out.println(x+"  "+y);
+    	  
+    	  for(int i=x+1;i<8;++i){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int i=x-1;i>=0;--i){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int j=y+1;j<8;++j){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int j=y-1;j>=0;--j){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  
 		
 	}
 	
