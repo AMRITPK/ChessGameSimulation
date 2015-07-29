@@ -191,11 +191,9 @@ public class PGNReader {
 		}
 	}
 	public void moveRook(String Movetext,char color){
-		printBoard();
-    	char colorToSearch=BLACK;
-    	  if(color==BLACK){
-    		  colorToSearch=WHITE;
-    	  }
+		
+    	char colorToSearch=color;
+    	  
     	  final String ASSUMENULL="";
     	  Movetext="Qa3";
     	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
@@ -240,11 +238,9 @@ public class PGNReader {
 	}
 	
 	public void moveBishop(String Movetext,char color){
-		printBoard();
-    	char colorToSearch=BLACK;
-    	  if(color==BLACK){
-    		  colorToSearch=WHITE;
-    	  }
+		
+    	char colorToSearch=color;
+    	 
     	  final String ASSUMENULL="";
     	  Movetext="Qa3";
     	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
