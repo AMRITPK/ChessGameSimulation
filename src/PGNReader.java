@@ -31,6 +31,8 @@ public class PGNReader {
 
 	private void executeMove(String pos, char color) {
 
+		
+		
 		String FinalPos = pos.substring(1, pos.length() - 1);
 
 		switch (pos.charAt(0)) {
@@ -91,7 +93,17 @@ public class PGNReader {
 	private void movePawn(String notation, char color) {
 		boolean  capture = notation.indexOf(CAPTURE) != -1;
 	}
+	
+	public void printBoard(){
+		for(int i=0;i<8;++i){
+			for(int j=7;j>=0;--j){
+				System.out.print(board[i][j]);
+			}
+			System.out.println();
+		}
+	}
 	public void moveRook(String Movetext,char color){
+		printBoard();
     	char colorToSearch=BLACK;
     	  if(color==BLACK){
     		  colorToSearch=WHITE;
