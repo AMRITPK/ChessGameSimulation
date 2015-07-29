@@ -1,3 +1,4 @@
+
 public class PGNReader {
 	private static final int BOARDSIZE = 8;
 
@@ -10,15 +11,17 @@ public class PGNReader {
 
 	private static final char CAPTURE = 'x';
 
-	final static char PAWN = 'P';
+
+	final static char PAWN = 'P';	
 	final static char KING = 'K';
 	final static char QUEEN = 'Q';
 	final static char ROOK = 'R';
 	final static char BISHOP = 'B';
 	final static char KNIGHT = 'N';
 
+
 	public PGNReader() {
-		board = new String[BOARDSIZE][BOARDSIZE];
+		board = new String[BOARDSIZE][BOARDSIZE];		
 		initBoard();
 
 	}
@@ -30,39 +33,41 @@ public class PGNReader {
 				board[i][j] = BLANK;
 			}
 		}
-
+		
+		
 		for (int i = 0; i < BOARDSIZE; i++) {
-			board[1][i] = "" + WHITE + PAWN;
-			board[6][i] = "" + BLACK + PAWN;
+			board[1][i] = WHITE+""+PAWN;
+			board[6][i] = BLACK+""+PAWN;
 		}
+		
+		board[0][0] = WHITE+""+ROOK;
+		board[0][7] = WHITE+""+ROOK;
+		board[7][0] = BLACK+""+ROOK;
+		board[7][7] = BLACK+""+ROOK;
 
-		board[0][0] = "" + WHITE + ROOK;
-		board[0][7] = "" + WHITE + ROOK;
-		board[7][0] = "" + BLACK + ROOK;
-		board[7][7] = "" + BLACK + ROOK;
-
-		board[0][1] = "" + WHITE + KNIGHT;
-		board[0][6] = "" + WHITE + KNIGHT;
-		board[7][1] = "" + BLACK + KNIGHT;
-		board[7][6] = "" + BLACK + KNIGHT;
-
-		board[0][2] = "" + WHITE + BISHOP;
-		board[0][5] = "" + WHITE + BISHOP;
-		board[7][2] = "" + BLACK + BISHOP;
-		board[7][5] = "" + BLACK + BISHOP;
-
-		board[0][3] = "" + WHITE + KING;
-		board[7][4] = "" + BLACK + KING;
-
-		board[0][4] = "" + WHITE + QUEEN;
-		board[7][3] = "" + BLACK + QUEEN;
+		board[0][1] = WHITE+""+KNIGHT;
+		board[0][6] = WHITE+""+KNIGHT;
+		board[7][1] = BLACK+""+KNIGHT;
+		board[7][6] = BLACK+""+KNIGHT;
+		
+		board[0][2] = WHITE+""+BISHOP;
+		board[0][5] = WHITE+""+BISHOP;
+		board[7][2] = BLACK+""+BISHOP;
+		board[7][5] = BLACK+""+BISHOP;
+		
+		
+		board[0][3] = WHITE+""+KING;
+		board[7][4] = BLACK+""+KING;
+		
+		board[0][4] = WHITE+""+QUEEN;
+		board[7][3] = BLACK+""+QUEEN;
 	}
 
 	public void move(String moveNotation) {
-
+		
 		String[] s = moveNotation.trim().split(" ");
-
-		System.out.println(s[0] + "   " + s[1]);
+		
+		System.out.println(s[0].trim()+"-"+s[1].trim());
 
 		executeMove(s[0].trim(), WHITE);
 		executeMove(s[1].trim(), BLACK);
@@ -70,8 +75,9 @@ public class PGNReader {
 
 	private void executeMove(String pos, char color) {
 
+		
 		String finalPos = pos.substring(1, pos.length());
-
+		
 		switch (pos.charAt(0)) {
 		case 'B':
 			moveBishop(finalPos, color);
@@ -89,7 +95,7 @@ public class PGNReader {
 			moveRook(finalPos, color);
 			break;
 		case 'O':
-			// TODO handle
+			//TODO handle 
 			break;
 		default:
 			movePawn(pos, color);
@@ -125,10 +131,13 @@ public class PGNReader {
 
 	}
 
+	
+
 	private void moveQueen(String finalPos, char color) {
 		// TODO Auto-generated method stub
 
 	}
+
 
 	public void moveKnight(String finalPos, char color) {
 		int knightXPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
@@ -158,169 +167,169 @@ public class PGNReader {
 		board[finalX][finalY] = BLANK;
 
 	}
-
-	private void movePawn(String finalPos, char color) {
-		boolean capture = finalPos.indexOf(CAPTURE) != -1;
-
-		int x = finalPos.charAt(0) - 'a';
-		int y = finalPos.charAt(0) - '1';
-
-		if (capture) {
-
-			if (color == WHITE && board[x - 1][y - 1].equals(color + PAWN)) {
-				board[x - 1][y - 1] = BLANK;
-
-			} else if (color == WHITE && board[x + 1][y - 1].equals(color + PAWN)) {
-				board[x + 1][y - 1] = BLANK;
-
-			} else if (color == BLACK && board[x - 1][y + 1].equals(color + PAWN)) {
-				board[x - 1][y + 1] = BLANK;
-
-			} else {
-				board[x + 1][y + 1] = BLANK;
-
-			}
-			return;
-		}
-
-		if (color == WHITE) {
-			for (int i = y - 1; i > 0; i--) {
-				if (board[x][i].equals(color + PAWN)) {
-					board[x + 1][i] = BLANK;
-					break;
-				}
-			}
-		} else {
-			for (int i = y + 1; i < BOARDSIZE; i++) {
-				if (board[x][i].equals(color + PAWN)) {
-					board[x + 1][i] = BLANK;
-					break;
-				}
-			}
-		}
-
-		board[x][y] = color + "" + PAWN;
-	}
-
-	public void printBoard() {
-		for (int i = 7; i >= 0; --i) {
-			for (int j = 7; j >= 0; --j) {
-				if (board[i][j].equals(BLANK)) {
-					System.out.print("  " + "|");
-				} else {
-					System.out.print(board[i][j] + "|");
-				}
-				System.out.println();
-				System.out.println("------------------------");
-			}
-		}
-	}
-
-	public void moveRook(String Movetext, char color) {
-		printBoard();
-		char colorToSearch = BLACK;
-		if (color == BLACK) {
-			colorToSearch = WHITE;
-		}
-		final String ASSUMENULL = "";
-		Movetext = "Qa3";
-		String position = Movetext.substring(Movetext.length() - 2, Movetext.length());
-		int x = position.charAt(0) - 'a';
-		int y = Integer.parseInt(position.charAt(1) + "") - 1;
-		System.out.println(x + "  " + y);
-
-		for (int i = x + 1; i < 8; ++i) {
-			if (board[i][y] == ASSUMENULL)
-				break;
-			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
-				board[i][y] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int i = x - 1; i >= 0; --i) {
-			if (board[i][y] == ASSUMENULL)
-				break;
-			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
-				board[i][y] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int j = y + 1; j < 8; ++j) {
-			if (board[j][x] == ASSUMENULL)
-				break;
-			if (board[j][x].startsWith(colorToSearch + "" + ROOK)) {
-				board[j][x] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int j = y - 1; j >= 0; --j) {
-			if (board[j][x] == ASSUMENULL)
-				break;
-			if (board[j][x].startsWith(colorToSearch + "" + ROOK)) {
-				board[j][x] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-	}
-
-	public void moveBishop(String Movetext, char color) {
-		printBoard();
-		char colorToSearch = BLACK;
-		if (color == BLACK) {
-			colorToSearch = WHITE;
-		}
-		final String ASSUMENULL = "";
-		Movetext = "Qa3";
-		String position = Movetext.substring(Movetext.length() - 2, Movetext.length());
-		int x = position.charAt(0) - 'a';
-		int y = Integer.parseInt(position.charAt(1) + "") - 1;
-		System.out.println(x + "  " + y);
-
-		for (int i = x + 1, j = y + 1; i < 8 && j < 8; ++i, ++j) {
-			if (board[i][y] == ASSUMENULL)
-				break;
-			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
-				board[i][y] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int i = x - 1, j = y - 1; i >= 0 && j >= 0; --i, --j) {
-			if (board[i][y] == ASSUMENULL)
-				break;
-			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
-				board[i][y] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int i = x + 1, j = y - 1; i < 8 && j >= 0; ++i, --j) {
-			if (board[j][x] == ASSUMENULL)
-				break;
-			if (board[j][x].startsWith(colorToSearch + "" + ROOK)) {
-				board[j][x] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-		for (int i = x - 1, j = y + 1; i >= 0 && j < 8; --i, j++) {
-			if (board[j][x] == ASSUMENULL)
-				break;
-			if (board[j][x].startsWith(colorToSearch + "" + ROOK)) {
-				board[j][x] = ASSUMENULL;
-				board[x][y] = color + "" + ROOK + "";
-				return;
-			}
-		}
-
-	}
-
+	
 	private boolean withinBoard(int x) {
 		return (x >= 0 && x < 8);
 	}
 
+	
+
+	
+	private void movePawn(String finalPos, char color) {
+		boolean  capture = finalPos.indexOf(CAPTURE) != -1;
+		System.err.println(finalPos);
+		
+		if(capture) {
+			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
+		}
+		
+		int x = finalPos.charAt(0)-'a';
+		int y = finalPos.charAt(1)-'1';
+		
+		if(capture) {
+			
+			if(color == WHITE && board[x-1][y-1].equals(color+PAWN) ) {
+				board[x-1][y-1] = BLANK;				
+			
+			} else if (color == WHITE && board[x+1][y-1].equals(color+PAWN) ) {
+				board[x+1][y-1] = BLANK;
+				
+			} else if (color == BLACK && board[x-1][y+1].equals(color+PAWN) ) {
+				board[x-1][y+1] = BLANK;
+			
+			} else {
+				board[x+1][y+1] = BLANK;
+			
+			}
+			board[x][y] = color+""+PAWN;
+			return;
+		}
+		
+		if(color == WHITE) {
+			for (int i = y-1; i >0 ; i--) {
+				if (board[x][i].equals(color+PAWN)) {
+					board[x+1][i] = BLANK;
+					break;
+				}
+			}
+		} else {
+			for (int i = y+1; i < BOARDSIZE ; i++) {
+				if (board[x][i].equals(color+PAWN)) {
+					board[x+1][i] = BLANK;
+					break;
+				}
+			}
+		}
+		board[x][y] = color+""+PAWN;
+		
+	}
+	
+	public void printBoard(){
+		for(int i=7;i>=0;--i){
+			for(int j=7;j>=0;--j){
+				if (board[i][j].equals(BLANK)) {
+					System.out.print("  "+"|");
+				} else {
+					System.out.print(board[i][j]+"|");
+				}	
+			}
+			System.out.println();
+			System.out.println("------------------------");
+		}
+	}
+	public void moveRook(String Movetext,char color){
+		
+    	char colorToSearch=color;
+    	  
+    	  final String ASSUMENULL="";
+    	  Movetext="Qa3";
+    	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
+    	  int x =position.charAt(0)-'a';
+    	  int y =Integer.parseInt(position.charAt(1)+"")-1; 
+    	  System.out.println(x+"  "+y);
+    	  
+    	  for(int i=x+1;i<8;++i){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int i=x-1;i>=0;--i){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int j=y+1;j<8;++j){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int j=y-1;j>=0;--j){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  
+		
+	}
+	
+	public void moveBishop(String Movetext,char color){
+		
+    	char colorToSearch=color;
+    	 
+    	  final String ASSUMENULL="";
+    	  Movetext="Qa3";
+    	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
+    	  int x =position.charAt(0)-'a';
+    	  int y =Integer.parseInt(position.charAt(1)+"")-1; 
+    	  System.out.println(x+"  "+y);
+    	  
+    	  for(int i=x+1,j=y+1;i<8&&j<8;++i,++j){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int i=x-1,j=y-1;i>=0&&j>=0;--i,--j){
+    		  if(board[i][y]==ASSUMENULL) break;
+    		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
+    			  board[i][y]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int i=x+1,j=y-1;i<8&&j>=0;++i,--j){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  for(int i=x-1,j=y+1;i>=0&&j<8;--i,j++){
+    		  if(board[j][x]==ASSUMENULL) break;
+    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
+    			  board[j][x]=ASSUMENULL;
+    			  board[x][y]=color+""+ROOK+"";
+    			  return;
+    		  }
+    	  }
+    	  
+		
+	}
+	
+	
 }
