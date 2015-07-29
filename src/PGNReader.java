@@ -290,7 +290,7 @@ public class PGNReader {
 			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
 				board[i][y] = BLANK;
 				board[x][y] = color + "" + ROOK + "";
-				System.out.println("a i=" + i + "  j=" + y);
+				//System.out.println("a i=" + i + "  j=" + y);
 				return;
 			} else if (board[i][y] != BLANK)
 				break;
@@ -300,7 +300,7 @@ public class PGNReader {
 			if (board[i][y].startsWith(colorToSearch + "" + ROOK)) {
 				board[i][y] = BLANK;
 				board[x][y] = color + "" + ROOK + "";
-				System.out.println("b i=" + i + "  j=" + y);
+				//System.out.println("b i=" + i + "  j=" + y);
 				return;
 			} else if (board[i][y] != BLANK)
 				break;
@@ -311,7 +311,7 @@ public class PGNReader {
 				board[x][j] = BLANK;
 				board[x][y] = color + "" + ROOK + "";
 
-				System.out.println(board[x][j] + "   c i=" + x + "  j=" + j);
+				//System.out.println(board[x][j] + "   c i=" + x + "  j=" + j);
 				return;
 			} else if (board[x][j] != BLANK)
 				break;
@@ -321,7 +321,7 @@ public class PGNReader {
 			if (board[x][j].startsWith(colorToSearch + "" + ROOK)) {
 				board[x][j] = BLANK;
 				board[x][y] = color + "" + ROOK + "";
-				System.out.println("d i=" + x + "  j=" + j);
+				//System.out.println("d i=" + x + "  j=" + j);
 				return;
 			} else if (board[x][j] != BLANK)
 				break;
@@ -336,7 +336,7 @@ public class PGNReader {
 		String position = Movetext.substring(Movetext.length() - 2, Movetext.length());
 		int x = position.charAt(0) - 'a';
 		int y = Integer.parseInt(position.charAt(1) + "") - 1;
-		System.out.println(x + "  " + y);
+		//System.out.println(x + "  " + y);
 
 		for (int i = x + 1, j = y + 1; i < 8 && j < 8; ++i, ++j) {
 			if (board[i][y] == BLANK)
