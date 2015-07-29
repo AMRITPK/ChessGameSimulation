@@ -246,57 +246,59 @@ public class PGNReader {
 		}
 		System.out.println("    a  b  c  d  e  f  g  h  ");
 	}
-	
 	public void moveRook(String Movetext,char color){
 		Movetext=ROOK+Movetext;
 		
 		
 		char colorToSearch=color;
     	  
-    	  final String ASSUMENULL="";
     	  
     	  String position=Movetext.substring(Movetext.length()-2, Movetext.length());
-    	  int x =position.charAt(0)-'a';
-    	  int y =Integer.parseInt(position.charAt(1)+"")-1; 
+    	  int y =position.charAt(0)-'a';
+    	  int x =Integer.parseInt(position.charAt(1)+"")-1; 
     	 
     	  
     	  for(int i=x+1;i<8;++i){
-    		  if(board[i][y]==ASSUMENULL) break;
+    		  
     		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
-    			  board[i][y]=ASSUMENULL;
+    			  board[i][y]=BLANK;
     			  board[x][y]=color+""+ROOK+"";
+    			  System.out.println("a i="+i+"  j="+y);
     			  return;
-    		  }
+    		  }else if(board[i][y]!=BLANK) break;
     	  }
     	  for(int i=x-1;i>=0;--i){
-    		  if(board[i][y]==ASSUMENULL) break;
+    		 
     		  if(board[i][y].startsWith(colorToSearch+""+ROOK)){
-    			  board[i][y]=ASSUMENULL;
+    			  board[i][y]=BLANK;
     			  board[x][y]=color+""+ROOK+"";
+    			  System.out.println("b i="+i+"  j="+y);
     			  return;
     		  }
+    		  else if(board[i][y]!=BLANK) break;
     	  }
     	  for(int j=y+1;j<8;++j){
-    		  if(board[j][x]==ASSUMENULL) break;
-    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
-    			  board[j][x]=ASSUMENULL;
+    		 
+    		  if(board[x][j].startsWith(colorToSearch+""+ROOK)){
+    			  board[x][j]=BLANK;
     			  board[x][y]=color+""+ROOK+"";
-    			  board[5][5]=x+"  "+y;
+    			 
+    			  System.out.println(board[x][j]+"   c i="+x+"  j="+j);
     			  return;
-    		  }
+    		  }else  if(board[x][j]!=BLANK) break;
     	  }
     	  for(int j=y-1;j>=0;--j){
-    		  if(board[j][x]==ASSUMENULL) break;
-    		  if(board[j][x].startsWith(colorToSearch+""+ROOK)){
-    			  board[j][x]=ASSUMENULL;
+    		  
+    		  if(board[x][j].startsWith(colorToSearch+""+ROOK)){
+    			  board[x][j]=BLANK;
     			  board[x][y]=color+""+ROOK+"";
+    			  System.out.println("d i="+x+"  j="+j);
     			  return;
-    		  }
+    		  }else if(board[x][j]!=BLANK) break;
     	  }
     	  
 		
 	}
-	
 	public void moveBishop(String Movetext,char color){
 		Movetext=BISHOP+Movetext;
     	char colorToSearch=color;
