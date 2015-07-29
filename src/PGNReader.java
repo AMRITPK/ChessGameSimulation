@@ -366,7 +366,7 @@ public class PGNReader {
     			  board[i][j]=BLANK;
     			  board[x][y]=color+""+BISHOP+"";
     			  return;
-    		  }else if(board[i][j]==BLANK) break;
+    		  }else if(board[i][j]!=BLANK) break;
     	  }
     	  
 		
@@ -460,7 +460,7 @@ public class PGNReader {
     			  board[i][j]=BLANK;
     			  board[x][y]=color+""+QUEEN+"";
     			  return;
-    		  }else if(board[i][j]==BLANK) break;
+    		  }else if(board[i][j]!=BLANK) break;
     	  }
     	  
     	  
