@@ -56,10 +56,10 @@ public class PGNReader {
 		board[7][5] = BLACK+""+BISHOP;
 		
 		
-		board[0][3] = WHITE+""+KING;
-		board[0][4] = BLACK+""+KING;
+		board[0][4] = WHITE+""+KING;
+		board[7][3] = BLACK+""+KING;
 		
-		board[7][3] = WHITE+""+QUEEN;
+		board[0][3] = WHITE+""+QUEEN;
 		board[7][4] = BLACK+""+QUEEN;
 	}
 
@@ -177,15 +177,14 @@ public class PGNReader {
 	
 	private void movePawn(String finalPos, char color) {
 		boolean  capture = finalPos.indexOf(CAPTURE) != -1;
-		System.err.println(finalPos);
 		
 		if(capture) {
 			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
 		}
 		
-		int x = finalPos.charAt(0)-'a';
-		int y = finalPos.charAt(1)-'1';
-		System.err.println(x+"-"+y);
+		int x = finalPos.charAt(1)-'1';
+		int y = finalPos.charAt(0)-'a';
+		
 		
 		/*if(capture) {
 			if(color == WHITE && board[x-1][y-1].equals(color+PAWN) ) {
@@ -206,24 +205,25 @@ public class PGNReader {
 			return;
 		}
 		
-
+		*/
+		
 		if(color == WHITE) {
-			for (int i = y-1; i >0 ; i--) {
-				if (board[x][i].equals(color+PAWN)) {
-					board[x][i] = BLANK;
+			for (int i = x-1; i >Math.max(0,x-3) ; i--) {
+				System.out.println(x+"-"+y+"---"+board[i][x]);
+				if (board[i][y].equals(color+""+PAWN)) {
+					board[i][y] = BLANK;
 					break;
 				}
-				//System.err.println("Here"+board[x][i]);
 			}
 		} else {
-			for (int i = y+1; i < BOARDSIZE ; i++) {
-				if (board[x][i].equals(color+PAWN)) {
-					board[x][i] = BLANK;
+			for (int i = y+1; i < Math.min(y+3,BOARDSIZE) ; i++) {
+				if (board[i][y].equals(color+""+PAWN)) {
+					board[i][y] = BLANK;
 					break;
 				}
 			}
-		}*/
-		board[y][x] = finalPos;//color+""+PAWN;
+		}
+		board[x][y] = color+""+PAWN;
 		
 	}
 	
