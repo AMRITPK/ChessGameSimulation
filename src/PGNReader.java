@@ -3,6 +3,8 @@
  *
  */
 public class PGNReader {
+	private static final char CAPTURE = 'x';
+
 	String [][] board;
 	
 	final static char BLACK = 'B';
@@ -21,6 +23,10 @@ public class PGNReader {
 	
 	public void move(String moveNotation){
 		
+	}
+	
+	private void movePawn(String notation, char color) {
+		boolean  capture = notation.indexOf(CAPTURE) != -1;
 	}
 	
 }
