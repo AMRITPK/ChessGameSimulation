@@ -39,7 +39,8 @@ public class Main {
 			if (string.trim().length() != 0) {
 				pgnReader.move(string);
 				
-				System.err.println(string);
+				//System.err.println(string);
+				pgnReader.printBoard();
 			}
 		}
 		
