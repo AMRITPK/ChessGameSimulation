@@ -30,37 +30,37 @@ public class PGNReader {
 
 		for (int i = 0; i < BOARDSIZE; i++) {
 			for (int j = 0; j < BOARDSIZE; j++) {
-				board[i][j] = BLANK;
+				board[i][j] = i+""+j;
 			}
 		}
 		
 		
 		for (int i = 0; i < BOARDSIZE; i++) {
-			board[i][1] = WHITE+""+PAWN;
-			board[i][6] = BLACK+""+PAWN;
+			board[1][i] = WHITE+""+PAWN;
+			board[6][i] = BLACK+""+PAWN;
 		}
 		
 		board[0][0] = WHITE+""+ROOK;
-		board[7][0] = WHITE+""+ROOK;
-		board[0][7] = BLACK+""+ROOK;
+		board[0][7] = WHITE+""+ROOK;
+		board[7][0] = BLACK+""+ROOK;
 		board[7][7] = BLACK+""+ROOK;
 
-		board[1][0] = WHITE+""+KNIGHT;
-		board[6][0] = WHITE+""+KNIGHT;
-		board[1][7] = BLACK+""+KNIGHT;
-		board[6][7] = BLACK+""+KNIGHT;
+		board[0][1] = WHITE+""+KNIGHT;
+		board[0][6] = WHITE+""+KNIGHT;
+		board[7][1] = BLACK+""+KNIGHT;
+		board[7][6] = BLACK+""+KNIGHT;
 		
-		board[2][0] = WHITE+""+BISHOP;
-		board[5][0] = WHITE+""+BISHOP;
-		board[2][7] = BLACK+""+BISHOP;
-		board[5][7] = BLACK+""+BISHOP;
+		board[0][2] = WHITE+""+BISHOP;
+		board[0][5] = WHITE+""+BISHOP;
+		board[7][2] = BLACK+""+BISHOP;
+		board[7][5] = BLACK+""+BISHOP;
 		
 		
-		board[3][0] = WHITE+""+KING;
-		board[4][7] = BLACK+""+KING;
+		board[0][3] = WHITE+""+KING;
+		board[0][4] = BLACK+""+KING;
 		
-		board[4][0] = WHITE+""+QUEEN;
-		board[3][7] = BLACK+""+QUEEN;
+		board[7][3] = WHITE+""+QUEEN;
+		board[7][4] = BLACK+""+QUEEN;
 	}
 
 	public void move(String moveNotation) {
@@ -185,8 +185,9 @@ public class PGNReader {
 		
 		int x = finalPos.charAt(0)-'a';
 		int y = finalPos.charAt(1)-'1';
+		System.err.println(x+"-"+y);
 		
-		if(capture) {
+		/*if(capture) {
 			if(color == WHITE && board[x-1][y-1].equals(color+PAWN) ) {
 				board[x-1][y-1] = BLANK;
 			
@@ -205,7 +206,7 @@ public class PGNReader {
 			return;
 		}
 		
-		System.err.println(x+"-"+y);
+
 		if(color == WHITE) {
 			for (int i = y-1; i >0 ; i--) {
 				if (board[x][i].equals(color+PAWN)) {
@@ -221,15 +222,15 @@ public class PGNReader {
 					break;
 				}
 			}
-		}
-		board[x][y] = color+""+PAWN;
+		}*/
+		board[y][x] = finalPos;//color+""+PAWN;
 		
 	}
 	
 	public void printBoard(){
-		for(int j=7;j>=0;--j){
-			System.out.print((j+1)+"||");
-			for(int i=7;i>=0;--i){
+		for(int i=7;i>=0;--i){
+			System.out.print((i+1)+"||");
+			for(int j=0;j<8;++j){
 				if (board[i][j].equals(BLANK)) {
 					System.out.print("  "+"|");
 				} else {
