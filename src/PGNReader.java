@@ -1,12 +1,10 @@
 public class PGNReader {
-	
 
 	private static final int BOARDSIZE = 8;
 
 	private static final char CAPTURE = 'x';
 	private static final String SEPARATOR = "";
-	
-	
+
 	final static String BLANK = " ";
 	final static char BLACK = 'b';
 	final static char WHITE = 'w';
@@ -19,13 +17,13 @@ public class PGNReader {
 	final static char KNIGHT = 'N';
 
 	String[][] board;
-	
-	
+
 	public PGNReader() {
 		board = new String[BOARDSIZE][BOARDSIZE];
 		initBoard();
 
 	}
+
 	/**
 	 * Initialize the board
 	 */
@@ -64,10 +62,11 @@ public class PGNReader {
 		board[7][3] = BLACK + SEPARATOR + QUEEN;
 	}
 
-	
 	/**
 	 * Move a pair of Pieces.
-	 * @param moveNotation (WhiteMove BlackMove)
+	 * 
+	 * @param moveNotation
+	 *            (WhiteMove BlackMove)
 	 */
 	public void move(String moveNotation) {
 
@@ -81,8 +80,11 @@ public class PGNReader {
 
 	/**
 	 * Move a single Piece
-	 * @param pos final position in Algebraic notation (eg: Nxg4)
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation (eg: Nxg4)
+	 * @param color
+	 *            color of piece.
 	 */
 	void executeMove(String pos, char color) {
 
@@ -127,8 +129,10 @@ public class PGNReader {
 	}
 
 	/**
-	 * Move King and Rook in case of Queen-side Castling 
-	 * @param color color of piece.
+	 * Move King and Rook in case of Queen-side Castling
+	 * 
+	 * @param color
+	 *            color of piece.
 	 */
 	void queenSideCastling(char color) {
 		if (color == WHITE) {
@@ -143,10 +147,12 @@ public class PGNReader {
 			board[7][3] = BLACK + SEPARATOR + ROOK;
 		}
 	}
-	
+
 	/**
-	 * Move King and Rook in case of Queen-side Castling 
-	 * @param color color of piece.
+	 * Move King and Rook in case of Queen-side Castling
+	 * 
+	 * @param color
+	 *            color of piece.
 	 */
 	void kingSideCastling(char color) {
 		if (color == WHITE) {
@@ -164,8 +170,11 @@ public class PGNReader {
 
 	/**
 	 * Move King
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	void moveKing(String finalPos, char color) {
 		int kingYPositions[] = { 1, -1, 0, 0, 1, -1, -1, 1 };
@@ -175,11 +184,10 @@ public class PGNReader {
 		int yCoord = finalPos.charAt(strlen - 2) - 'a';
 		int xCoord = finalPos.charAt(strlen - 1) - '1';
 
-		int i, j;
 		int finalX = 0;
 		int finalY = 0;
 
-		for (i = 0, j = 0; i < 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			int possibleX = xCoord + kingXPositions[i];
 			int possibleY = yCoord + kingYPositions[i];
 
@@ -199,8 +207,11 @@ public class PGNReader {
 
 	/**
 	 * Move Knight
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	public void moveKnight(String finalPos, char color) {
 		int knightYPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
@@ -209,10 +220,10 @@ public class PGNReader {
 		int yCoord = finalPos.charAt(strlen - 2) - 'a';
 		int xCoord = finalPos.charAt(strlen - 1) - '1';
 
-		int i, j, possibleX, possibleY;
+		int possibleX, possibleY;
 		int finalX = 0;
 		int finalY = 0;
-		for (i = 0, j = 0; i < 8; i++) {
+		for (int i = 0; i < 8; i++) {
 
 			possibleX = xCoord + knightXPositions[i];
 			possibleY = yCoord + knightYPositions[i];
@@ -235,11 +246,14 @@ public class PGNReader {
 		board[finalX][finalY] = BLANK;
 
 	}
-	
+
 	/**
 	 * Move Pawn
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	void movePawn(String finalPos, char color) {
 		boolean capture = finalPos.indexOf(CAPTURE) != -1;
@@ -266,19 +280,20 @@ public class PGNReader {
 		int y = finalPos.charAt(0) - 'a';
 
 		if (capture) {
-			if (color == WHITE
+			if (color == WHITE && x > 0 && y > 0
 					&& board[x - 1][y - 1].equals(color + SEPARATOR + PAWN)) {
 				board[x - 1][y - 1] = BLANK;
 
-			} else if (color == WHITE
+			} else if (color == WHITE && x > 0 && y < 7
 					&& board[x - 1][y + 1].equals(color + SEPARATOR + PAWN)) {
 				board[x - 1][y + 1] = BLANK;
 
-			} else if (color == BLACK
+			} else if (color == BLACK && x < 7 && y > 0
 					&& board[x + 1][y - 1].equals(color + SEPARATOR + PAWN)) {
 				board[x + 1][y - 1] = BLANK;
 
-			} else {
+			} else if (color == BLACK && x < 7 && y < 7
+					&& board[x + 1][y + 1].equals(color + SEPARATOR + PAWN)) {
 				board[x + 1][y + 1] = BLANK;
 			}
 			board[x][y] = color + SEPARATOR + PAWN;
@@ -306,8 +321,11 @@ public class PGNReader {
 
 	/**
 	 * Move Rook
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	public void moveRook(String Movetext, char color) {
 		Movetext = ROOK + Movetext;
@@ -360,8 +378,11 @@ public class PGNReader {
 
 	/**
 	 * Move Bishop
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	public void moveBishop(String Movetext, char color) {
 
@@ -415,8 +436,11 @@ public class PGNReader {
 
 	/**
 	 * Move Queen
-	 * @param pos final position in Algebraic notation
-	 * @param color color of piece.
+	 * 
+	 * @param pos
+	 *            final position in Algebraic notation
+	 * @param color
+	 *            color of piece.
 	 */
 	public void moveQueen(String Movetext, char color) {
 		Movetext = Movetext.replaceAll(Character.toString(CAPTURE), SEPARATOR);
@@ -505,12 +529,11 @@ public class PGNReader {
 		}
 
 	}
-	
+
 	/**
 	 * Print Board.
 	 */
 	public void printBoard() {
-		System.out.println("  --------------------------");
 		System.out.println("  --------------------------");
 
 		for (int i = 7; i >= 0; --i) {
@@ -528,7 +551,6 @@ public class PGNReader {
 			System.out.println("  --------------------------");
 		}
 
-		System.out.println("  --------------------------");
 		System.out.println("    a  b  c  d  e  f  g  h  ");
 	}
 
