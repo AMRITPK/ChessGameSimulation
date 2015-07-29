@@ -17,7 +17,7 @@ public class PGNReader {
 	final static char QUEEN = 'Q';
 	final static char ROOK = 'R';
 	final static char BISHOP = 'B';
-	final static char KNIGHT = 'K';
+	final static char KNIGHT = 'N';
 
 
 	public PGNReader() {
@@ -183,11 +183,16 @@ public class PGNReader {
 	}
 	
 	public void printBoard(){
-		for(int i=0;i<8;++i){
+		for(int i=7;i>=0;--i){
 			for(int j=7;j>=0;--j){
-				System.out.print(board[i][j]);
+				if (board[i][j].equals(BLANK)) {
+					System.out.print("  "+"|");
+				} else {
+					System.out.print(board[i][j]+"|");
+				}	
 			}
 			System.out.println();
+			System.out.println("------------------------");
 		}
 	}
 	public void moveRook(String Movetext,char color){
