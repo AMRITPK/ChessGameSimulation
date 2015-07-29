@@ -36,38 +36,38 @@ public class PGNReader {
 		
 		
 		for (int i = 0; i < BOARDSIZE; i++) {
-			board[1][i] = ""+WHITE+PAWN;
-			board[6][i] = ""+BLACK+PAWN;
+			board[1][i] = WHITE+""+PAWN;
+			board[6][i] = BLACK+""+PAWN;
 		}
 		
-		board[0][0] = ""+WHITE+ROOK;
-		board[0][7] = ""+WHITE+ROOK;
-		board[7][0] = ""+BLACK+ROOK;
-		board[7][7] = ""+BLACK+ROOK;
+		board[0][0] = WHITE+""+ROOK;
+		board[0][7] = WHITE+""+ROOK;
+		board[7][0] = BLACK+""+ROOK;
+		board[7][7] = BLACK+""+ROOK;
 
-		board[0][1] = ""+WHITE+KNIGHT;
-		board[0][6] = ""+WHITE+KNIGHT;
-		board[7][1] = ""+BLACK+KNIGHT;
-		board[7][6] = ""+BLACK+KNIGHT;
+		board[0][1] = WHITE+""+KNIGHT;
+		board[0][6] = WHITE+""+KNIGHT;
+		board[7][1] = BLACK+""+KNIGHT;
+		board[7][6] = BLACK+""+KNIGHT;
 		
-		board[0][2] = ""+WHITE+BISHOP;
-		board[0][5] = ""+WHITE+BISHOP;
-		board[7][2] = ""+BLACK+BISHOP;
-		board[7][5] = ""+BLACK+BISHOP;
+		board[0][2] = WHITE+""+BISHOP;
+		board[0][5] = WHITE+""+BISHOP;
+		board[7][2] = BLACK+""+BISHOP;
+		board[7][5] = BLACK+""+BISHOP;
 		
 		
-		board[0][3] = ""+WHITE+KING;
-		board[7][4] = ""+BLACK+KING;
+		board[0][3] = WHITE+""+KING;
+		board[7][4] = BLACK+""+KING;
 		
-		board[0][4] = ""+WHITE+QUEEN;
-		board[7][3] = ""+BLACK+QUEEN;
+		board[0][4] = WHITE+""+QUEEN;
+		board[7][3] = BLACK+""+QUEEN;
 	}
 
 	public void move(String moveNotation) {
 		
 		String[] s = moveNotation.trim().split(" ");
 		
-		System.out.println(s[0]+"   "+s[1]);
+		System.out.println(s[0].trim()+"-"+s[1].trim());
 
 		executeMove(s[0].trim(), WHITE);
 		executeMove(s[1].trim(), BLACK);
@@ -75,26 +75,30 @@ public class PGNReader {
 
 	private void executeMove(String pos, char color) {
 
-		String FinalPos = pos.substring(1, pos.length() - 1);
-
+		
+		String finalPos = pos.substring(1, pos.length());
+		
 		switch (pos.charAt(0)) {
 		case 'B':
-			moveBishop(FinalPos, color);
+			moveBishop(finalPos, color);
 			break;
 		case 'N':
-			moveKnight(FinalPos, color);
+			moveKnight(finalPos, color);
 			break;
 		case 'K':
-			moveKing(FinalPos, color);
+			moveKing(finalPos, color);
 			break;
 		case 'Q':
-			moveQueen(FinalPos, color);
+			moveQueen(finalPos, color);
 			break;
 		case 'R':
-			moveRook(FinalPos, color);
+			moveRook(finalPos, color);
+			break;
+		case 'O':
+			//TODO handle 
 			break;
 		default:
-			movePawn(FinalPos, color);
+			movePawn(pos, color);
 		}
 	}
 
@@ -134,9 +138,14 @@ public class PGNReader {
 	
 	private void movePawn(String finalPos, char color) {
 		boolean  capture = finalPos.indexOf(CAPTURE) != -1;
+		System.err.println(finalPos);
 		
-		int x= finalPos.charAt(0)-'a';
-		int y= finalPos.charAt(0)-'1';
+		if(capture) {
+			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
+		}
+		
+		int x = finalPos.charAt(0)-'a';
+		int y = finalPos.charAt(1)-'1';
 		
 		if(capture) {
 			
@@ -153,7 +162,7 @@ public class PGNReader {
 				board[x+1][y+1] = BLANK;
 			
 			}
-			board[x][y] = ""+color+PAWN;
+			board[x][y] = color+""+PAWN;
 			return;
 		}
 		
@@ -172,7 +181,7 @@ public class PGNReader {
 				}
 			}
 		}
-		board[x][y] = ""+color+PAWN;
+		board[x][y] = color+""+PAWN;
 		
 	}
 	
