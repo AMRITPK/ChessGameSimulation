@@ -120,8 +120,8 @@ public class PGNReader {
 	 void kingSideCastling(char color) {
 		if (color == WHITE) {
 			board[0][4] = BLANK;
-			board[0][2] = WHITE + "" + KING;
-			board[0][6] = BLANK;
+			board[0][6] = WHITE + "" + KING;
+			board[0][7] = BLANK;
 			board[0][5] = WHITE + "" + ROOK;
 		} else {
 			board[7][4] = BLANK;
