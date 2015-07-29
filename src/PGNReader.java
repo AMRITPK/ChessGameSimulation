@@ -56,10 +56,7 @@ public class PGNReader {
 		
 	}
 
-	private void moveRook(String finalPos, char color) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	private void moveQueen(String finalPos, char color) {
 		// TODO Auto-generated method stub
