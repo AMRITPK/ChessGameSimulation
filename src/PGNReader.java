@@ -172,7 +172,6 @@ public class PGNReader {
 		return (x >= 0 && x < 8);
 	}
 
-	
 
 	
 	private void movePawn(String finalPos, char color) {
