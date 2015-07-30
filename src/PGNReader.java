@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class PGNReader {
 
 	private static final int BOARDSIZE = 8;
@@ -608,6 +611,24 @@ public class PGNReader {
 	 * Print Board.
 	 */
 	public void printBoard() {
+		
+		Map<String,String> unicodeChar = new HashMap<String,String>();
+		unicodeChar.put("wK","\u2654 "); 
+		unicodeChar.put("wQ","\u2655 "); 
+		unicodeChar.put("wR","\u2656 "); 
+		unicodeChar.put("wB","\u2657 "); 
+		unicodeChar.put("wN","\u2658 "); 
+		unicodeChar.put("wP","\u2659 "); 
+		
+		
+		unicodeChar.put("bK","\u265A "); 
+		unicodeChar.put("bQ","\u265B "); 
+		unicodeChar.put("bR","\u265C "); 
+		unicodeChar.put("bB","\u265D "); 
+		unicodeChar.put("bN","\u265E "); 
+		unicodeChar.put("bP","\u265F "); 
+		
+		
 		System.out.println("  --------------------------");
 
 		for (int i = 7; i >= 0; --i) {
@@ -617,7 +638,7 @@ public class PGNReader {
 				if (board[i][j].equals(BLANK)) {
 					System.out.print("  " + "|");
 				} else {
-					System.out.print(board[i][j] + "|");
+					System.out.print(unicodeChar.get(board[i][j]) + "|");
 				}
 			}
 

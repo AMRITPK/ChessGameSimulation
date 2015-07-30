@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -11,6 +13,7 @@ public class Main {
 	/**
 	 * @param args
 	 */
+
 	public static void main(String[] args) {
 		String filename = "eg.pgn";
 		String input = "";
