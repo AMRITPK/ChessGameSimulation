@@ -32,6 +32,7 @@ public class PGNReader {
 		for (int i = 0; i < BOARDSIZE; i++) {
 			for (int j = 0; j < BOARDSIZE; j++) {
 				board[i][j] = BLANK;
+				//board[i][j] = i + SEPARATOR + j;
 			}
 		}
 
@@ -214,8 +215,18 @@ public class PGNReader {
 	 *            color of piece.
 	 */
 	public void moveKnight(String finalPos, char color) {
-		int knightYPositions[] = { 1, 1, 2, -1, -1, -1, 2, -2 };
-		int knightXPositions[] = { 2, -2, 1, 1, 2, -2, -1, -1 };
+
+		boolean capture = finalPos.indexOf(CAPTURE) != -1;
+
+		if (capture) {
+			finalPos = finalPos.replace(Character.toString(CAPTURE), "");
+		}
+
+		boolean finalPosGiven = (finalPos.length() == 3);
+
+		int knightXPositions[] = { 1, 2, -2, 2, -1, -2, 1, -1 };
+		int knightYPositions[] = { -2, 1, -1, -1, -2, 1, 2, 2 };
+
 		int strlen = finalPos.length();
 		int yCoord = finalPos.charAt(strlen - 2) - 'a';
 		int xCoord = finalPos.charAt(strlen - 1) - '1';
@@ -223,6 +234,8 @@ public class PGNReader {
 		int possibleX, possibleY;
 		int finalX = 0;
 		int finalY = 0;
+
+
 		for (int i = 0; i < 8; i++) {
 
 			possibleX = xCoord + knightXPositions[i];
@@ -232,11 +245,10 @@ public class PGNReader {
 					&& withinBoard(possibleY)
 					&& board[possibleX][possibleY].contains(color + SEPARATOR
 							+ KNIGHT)) {
-				char position = finalPos.charAt(0);
 				finalX = possibleX;
 				finalY = possibleY;
-				if (position != 'x' && finalPos.charAt(1) == 'x'
-						&& possibleY == position - 'a') {
+
+				if (finalPosGiven && finalY == (finalPos.charAt(0) - 'a')) {
 					break;
 				}
 			}
@@ -387,8 +399,6 @@ public class PGNReader {
 	public void moveBishop(String Movetext, char color) {
 
 		Movetext = Movetext.replaceAll(Character.toString(CAPTURE), "");
-		Movetext = BISHOP + Movetext;
-		char colorToSearch = color;
 
 		String position = Movetext.substring(Movetext.length() - 2,
 				Movetext.length());
@@ -397,36 +407,36 @@ public class PGNReader {
 
 		for (int i = x + 1, j = y + 1; i < 8 && j < 8; ++i, ++j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + BISHOP)) {
+			if (board[i][j].startsWith(color + SEPARATOR + BISHOP)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + BISHOP + SEPARATOR;
+				board[x][y] = color + SEPARATOR + BISHOP;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x - 1, j = y - 1; i >= 0 && j >= 0; --i, --j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + BISHOP)) {
+			if (board[i][j].startsWith(color + SEPARATOR + BISHOP)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + BISHOP + SEPARATOR;
+				board[x][y] = color + SEPARATOR + BISHOP;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x + 1, j = y - 1; i < 8 && j >= 0; ++i, --j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + BISHOP)) {
+			if (board[i][j].startsWith(color + SEPARATOR + BISHOP)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + BISHOP + SEPARATOR;
+				board[x][y] = color + SEPARATOR + BISHOP;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x - 1, j = y + 1; i >= 0 && j < 8; --i, j++) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + BISHOP)) {
+			if (board[i][j].startsWith(color + SEPARATOR + BISHOP)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + BISHOP + SEPARATOR;
+				board[x][y] = color + SEPARATOR + BISHOP;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
@@ -444,9 +454,6 @@ public class PGNReader {
 	 */
 	public void moveQueen(String Movetext, char color) {
 		Movetext = Movetext.replaceAll(Character.toString(CAPTURE), SEPARATOR);
-		Movetext = QUEEN + Movetext;
-
-		char colorToSearch = color;
 
 		String position = Movetext.substring(Movetext.length() - 2,
 				Movetext.length());
@@ -455,27 +462,27 @@ public class PGNReader {
 
 		for (int i = x + 1; i < 8; ++i) {
 
-			if (board[i][y].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][y].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][y] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][y] != BLANK)
 				break;
 		}
 		for (int i = x - 1; i >= 0; --i) {
 
-			if (board[i][y].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][y].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][y] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][y] != BLANK)
 				break;
 		}
 		for (int j = y + 1; j < 8; ++j) {
 
-			if (board[x][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[x][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[x][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 
 				return;
 			} else if (board[x][j] != BLANK)
@@ -483,9 +490,9 @@ public class PGNReader {
 		}
 		for (int j = y - 1; j >= 0; --j) {
 
-			if (board[x][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[x][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[x][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[x][j] != BLANK)
 				break;
@@ -493,36 +500,36 @@ public class PGNReader {
 
 		for (int i = x + 1, j = y + 1; i < 8 && j < 8; ++i, ++j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x - 1, j = y - 1; i >= 0 && j >= 0; --i, --j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x + 1, j = y - 1; i < 8 && j >= 0; ++i, --j) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
 		}
 		for (int i = x - 1, j = y + 1; i >= 0 && j < 8; --i, j++) {
 
-			if (board[i][j].startsWith(colorToSearch + SEPARATOR + QUEEN)) {
+			if (board[i][j].startsWith(color + SEPARATOR + QUEEN)) {
 				board[i][j] = BLANK;
-				board[x][y] = color + SEPARATOR + QUEEN + SEPARATOR;
+				board[x][y] = color + SEPARATOR + QUEEN;
 				return;
 			} else if (board[i][j] != BLANK)
 				break;
@@ -555,6 +562,6 @@ public class PGNReader {
 	}
 
 	boolean withinBoard(int x) {
-		return (x >= 0 && x < 8);
+		return (0 <= x && x < BOARDSIZE);
 	}
 }
