@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -610,43 +612,55 @@ public class PGNReader {
 	/**
 	 * Print Board.
 	 */
-	public void printBoard() {
+	public void printBoard(PrintWriter out) {
 		
 		Map<String,String> unicodeChar = new HashMap<String,String>();
-		unicodeChar.put("wK","\u2654 "); 
-		unicodeChar.put("wQ","\u2655 "); 
-		unicodeChar.put("wR","\u2656 "); 
-		unicodeChar.put("wB","\u2657 "); 
-		unicodeChar.put("wN","\u2658 "); 
-		unicodeChar.put("wP","\u2659 "); 
+		unicodeChar.put("wK","\u2654"); 
+		unicodeChar.put("wQ","\u2655"); 
+		unicodeChar.put("wR","\u2656"); 
+		unicodeChar.put("wB","\u2657"); 
+		unicodeChar.put("wN","\u2658"); 
+		unicodeChar.put("wP","\u2659"); 
 		
 		
-		unicodeChar.put("bK","\u265A "); 
-		unicodeChar.put("bQ","\u265B "); 
-		unicodeChar.put("bR","\u265C "); 
-		unicodeChar.put("bB","\u265D "); 
-		unicodeChar.put("bN","\u265E "); 
-		unicodeChar.put("bP","\u265F "); 
-		
+		unicodeChar.put("bK","\u265A"); 
+		unicodeChar.put("bQ","\u265B"); 
+		unicodeChar.put("bR","\u265C"); 
+		unicodeChar.put("bB","\u265D"); 
+		unicodeChar.put("bN","\u265E"); 
+		unicodeChar.put("bP","\u265F"); 
 		
 		System.out.println("  --------------------------");
 
+		out.println("  --------------------------");
+
 		for (int i = 7; i >= 0; --i) {
 			System.out.print((i + 1) + "||");
-
+			out.print((i + 1) + "||");
+ 
 			for (int j = 0; j < 8; ++j) {
 				if (board[i][j].equals(BLANK)) {
 					System.out.print("  " + "|");
+					out.print("  " + "|");
+
 				} else {
 					System.out.print(unicodeChar.get(board[i][j]) + "|");
+					out.print(unicodeChar.get(board[i][j]) + "|");
+
 				}
 			}
 
 			System.out.println("|");
+			out.println("|");
+
 			System.out.println("  --------------------------");
+			out.println("  --------------------------");
+
 		}
 
 		System.out.println("    a  b  c  d  e  f  g  h  ");
+		System.out.println();
+		out.println("    a  b  c  d  e  f  g  h  ");
 	}
 
 	private boolean withinBoard(int x) {
