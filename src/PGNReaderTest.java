@@ -11,8 +11,8 @@ public class PGNReaderTest {
 		PGNReader reader = new PGNReader();
 		reader.initBoard();
 		for (int i = 0; i < BOARDSIZE; i++) {
-			reader.board[1][i] = reader.BLANK;
-			reader.board[6][i] = reader.BLANK;
+			reader.board[1][i] = PGNReader.BLANK;
+			reader.board[6][i] = PGNReader.BLANK;
 		}
 
 		reader.printBoard();
@@ -20,8 +20,8 @@ public class PGNReaderTest {
 		reader.printBoard();
 		reader.initBoard();
 		for (int i = 0; i < BOARDSIZE; i++) {
-			reader.board[1][i] = reader.BLANK;
-			reader.board[6][i] = reader.BLANK;
+			reader.board[1][i] = PGNReader.BLANK;
+			reader.board[6][i] = PGNReader.BLANK;
 		}
 
 		reader.printBoard();
@@ -29,8 +29,8 @@ public class PGNReaderTest {
 		reader.printBoard();
 		reader.initBoard();
 		for (int i = 0; i < BOARDSIZE; i++) {
-			reader.board[1][i] = reader.BLANK;
-			reader.board[6][i] = reader.BLANK;
+			reader.board[1][i] = PGNReader.BLANK;
+			reader.board[6][i] = PGNReader.BLANK;
 		}
 
 		reader.printBoard();
@@ -38,8 +38,8 @@ public class PGNReaderTest {
 		reader.printBoard();
 		reader.initBoard();
 		for (int i = 0; i < BOARDSIZE; i++) {
-			reader.board[1][i] = reader.BLANK;
-			reader.board[6][i] = reader.BLANK;
+			reader.board[1][i] = PGNReader.BLANK;
+			reader.board[6][i] = PGNReader.BLANK;
 		}
 
 		reader.printBoard();
